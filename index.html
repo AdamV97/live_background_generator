@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+  <title>Generate!</title>
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <!-- navigation -->
+    <div class="navigation">
+      
+    </div>
+  <!-- main part -->
+    <div class="main_holder">
+      <!-- generator -->
+      <div class="main_generator">
+          <div>
+            <label>Sprite Color</label>
+            <input type="color" id="sprite_color" class="mainChange" name ="color" value="#FFFFFF">
+          </div>
+          <div>
+            <label>Sprite Size</label>
+            <input type="range" id="sprite_size" min="0" max="10" step="0.1" name ="size" value="0.7" class="mainChange">
+          </div>
+      </div>
+      <!-- live preview -->
+      <div id="preview" class="main_livepreview">
+
+      </div>
+    </div>
+<script src="src/jquery_3_4_1.min.js"></script>
+<script src="src/three.min.js"></script>
+<script src="js/main.js"></script>  
+</body>
+<footer>
+
+</footer>
