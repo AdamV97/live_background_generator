@@ -1,4 +1,4 @@
-let scene, camera, renderer, starGeo, stars, element, mainAnimation;
+let scene, camera, renderer, starGeo, stars, element, mainAnimation, mainRotation;
 
 element = document.getElementById('preview');
 
@@ -12,18 +12,62 @@ element.innerHTML = '';
 cancelAnimationFrame(mainAnimation);
 }
 
-function mapValues(){
-  
+// function getBase64(file) {
+//   var deferred = $.Deferred();
+
+//   var reader = new FileReader();
+//   reader.readAsDataURL(file);
+//   reader.onload = function () {
+//     deferred.resolve(reader.result);
+//     // return(reader.result);
+//   };
+//   reader.onerror = function (error) {
+//     deferred.reject(error);
+//     console.log('Error: ', error);
+//   };
+
+//   deferred.promise();
+// }
+
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
 }
 
-function initial_function(color, size){
+function mapValues(){
+  return new Promise((resolve, reject) => {
+    var inputs = $('.mainChange');
+    var properties = {};
 
-  if(color === undefined){
-    color = '#fffff';
-  }else if(size === undefined){
-    size = 0.7;
-  };
+    for(let i = 0; i < inputs.length; i++){
+      properties[inputs[i].name] = $(inputs[i]).val();
+    }
 
+    mainRotation = parseFloat(properties.rotation);
+
+    if(properties.number_particles > 1000000){
+      properties.number_particles = 1000000;
+      $('#particle_number').val('1000000');
+    }
+
+    var file = document.querySelector('#upload_sprite').files[0];
+    if(file === undefined){
+      properties.upload_sprite = 'img/main_particle.png';
+      return resolve(properties);
+    }
+
+    getBase64(file).then(function (data){
+      properties.upload_sprite = data;
+      return resolve(properties);
+    });
+  });
+}
+
+function initial_function(properties){
   scene =new THREE.Scene();
   camera = new THREE.PerspectiveCamera(60,window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.z = 1;
@@ -34,22 +78,23 @@ function initial_function(color, size){
   element.appendChild(renderer.domElement);
 
   starGeo = new THREE.Geometry();
-  for(let i = 0; i<10000; i++){
+  for(let i = 0; i < properties.number_particles; i++){
     star = new THREE.Vector3(
       Math.random() * 600 - 300,
       Math.random() * 600 - 300,
       Math.random() * 600 - 300
     );
-    star.velocity = 0;
-    star.acceleration = 0.005;
+    star.velocity =  parseFloat(properties.velocity);
+    star.acceleration = parseFloat(properties.acceleration);
     starGeo.vertices.push(star);
   }
 
-  let sprite = new THREE.TextureLoader().load('img/main_particle.png');
+  let sprite = new THREE.TextureLoader().load(properties.upload_sprite);
   let starMaterial = new THREE.PointsMaterial({
-    color: color,
-    size: size,
-    map: sprite
+    color: properties.color,
+    size: properties.size,
+    map: sprite,
+    opacity: 1
   });
 
   stars = new THREE.Points(starGeo,starMaterial);
@@ -68,18 +113,18 @@ function animate(){
     }
   });
   starGeo.verticesNeedUpdate = true;
-  stars.rotation.y += 0.002;
+  stars.rotation.y += mainRotation;
   renderer.render(scene,camera);
   mainAnimation = requestAnimationFrame(animate);
 }
 
-initial_function();
+mapValues().then(function (data){
+  initial_function(data);
+});
 
-
-// EVENTS
-
-$( ".mainChange" ).change(function(e) {
-  console.log($('#sprite_size').val());
+$( ".mainChange" ).change(function() {
   reset();
-  initial_function();
+  mapValues().then(function (data){
+    initial_function(data);
+  });
 });

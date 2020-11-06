@@ -20,6 +20,26 @@
             <label>Sprite Size</label>
             <input type="range" id="sprite_size" min="0" max="10" step="0.1" name ="size" value="0.7" class="mainChange">
           </div>
+          <div>
+            <label>Number of particles</label>
+            <input type="number" id="particle_number" name ="number_particles" value="10000" class="mainChange">
+          </div>
+          <div>
+            <label>Velocity</label>
+            <input type="number" id="velocity" name ="velocity" value="0" step="1" class="mainChange">
+          </div>
+          <div>
+            <label>Acceleration</label>
+            <input type="number" id="acceleration" name ="acceleration" value="0.005" step="0.005" class="mainChange">
+          </div>
+          <div>
+            <label>Rotation</label>
+            <input type="number" id="rotation" name ="rotation" value="0.002" step="0.001" class="mainChange">
+          </div>
+          <div>
+            <label>Upload sprite(image)</label>
+            <input type="file" name="upload_sprite" id="upload_sprite" class="mainChange"/>
+          </div>
       </div>
       <!-- live preview -->
       <div id="preview" class="main_livepreview">
