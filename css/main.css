@@ -1,5 +1,6 @@
 html{
   height: 100%;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 body{
@@ -9,12 +10,13 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: rgb(0, 0, 0);
 }
 
 .navigation{
   width: 100%;
   height: 5%;
-  background-color: blue;
+  background-color: rgb(0, 0, 255);
 }
 
 .main_holder{
@@ -26,19 +28,45 @@ body{
 .main_generator{
   width: 20%;
   height: 700px;
-  background-color: blueviolet;
+  background-color: rgb(158, 158, 158);
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 4px;
+  justify-content: space-around;
 }
 
 .main_generator > div{
   display: flex;
   flex-direction: column;
+  margin: 15px;
+  text-align: center;
+  align-items: center;
+}
+
+.main_generator > div > label{
+  margin-bottom: 10px;
 }
 
 .main_livepreview{
   width: 60%;
   height: 700px;
-  background-color: chartreuse;
+  background-color: rgb(255, 255, 255);
+}
+
+.mainChange{
+  height: 20px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  text-align: center;
+}
+
+canvas{
+  border: 2px rgb(255, 255, 255) solid;
+}
+
+#upload_sprite{
+  width: 70%;
+  margin-bottom: 5px;
 }

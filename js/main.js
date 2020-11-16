@@ -12,23 +12,6 @@ element.innerHTML = '';
 cancelAnimationFrame(mainAnimation);
 }
 
-// function getBase64(file) {
-//   var deferred = $.Deferred();
-
-//   var reader = new FileReader();
-//   reader.readAsDataURL(file);
-//   reader.onload = function () {
-//     deferred.resolve(reader.result);
-//     // return(reader.result);
-//   };
-//   reader.onerror = function (error) {
-//     deferred.reject(error);
-//     console.log('Error: ', error);
-//   };
-
-//   deferred.promise();
-// }
-
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -122,9 +105,14 @@ mapValues().then(function (data){
   initial_function(data);
 });
 
-$( ".mainChange" ).change(function() {
+// EVENTS
+$( '.mainChange' ).change(function() {
   reset();
   mapValues().then(function (data){
     initial_function(data);
   });
+});
+
+$('#export_btn').click(function(){
+// console.log('tekst');
 });
